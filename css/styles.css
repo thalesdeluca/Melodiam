@@ -6,7 +6,7 @@
 #container {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(#B72AFF, #D176FF);
+  
   display: flex;
   overflow: hidden;
   align-items: center;
@@ -51,15 +51,29 @@
   border-radius: 0;
   border-bottom-right-radius: 40px;
   border-top-left-radius: 40px;
+  transform: scale(1.05);
   transition: all 0.45s ease;
 }
 #search:focus {
   outline: none;
 }
 
-.particle{
-  position: absolute;
+#background {
+  width: 100vw;
+  height: 100vh;
   display: block;
-  border-radius: 50%;
+  position: absolute;
+  overflow: hidden;
+  
+  z-index: -2;
+  background: linear-gradient(#b72aff, #D176FF);
 }
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+
+
 
