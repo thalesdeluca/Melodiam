@@ -86,21 +86,26 @@ h2 {
   animation: move-particles 30s linear infinite;
 }
 
-#results {
+.wrapper{
   background: #fcfcfc;
   z-index: 0;
-  flex-direction: row;
-  align-items: "center";
   width: 39.8%;
   padding: 40px 15px 15px 15px;
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
-  margin-top: -40px;
+  margin-top: -50px;
   box-shadow: 4px 2px 6px rgba(0, 0, 0, 0.2);
-  /*height: 0;*/
-  overflow-x: scroll;
   display: none;
 }
+
+#results {
+  flex-direction: row;
+  align-items: "center";
+  overflow-x: scroll;
+  width: 100%;
+  display: flex;
+}
+
 h3 {
   font-family: 'Aleo', serif;
   display: flex;
@@ -109,16 +114,19 @@ h3 {
   padding: 20px;
   border-right: 1px solid rgba(133,133,133,0.3);
 }
+
 h3:hover {
   display: flex;
   color: #fff;
   background-color: #b72aff;
   transition: all 0.45s ease;
+  cursor: pointer;
 }
+
 .loader {
   display: flex;
   align-self: center;
-  margin: 0 auto;
+  margin: 50px auto;
   height: 30px;
   width: 30px;
   background:#b41dff;
@@ -127,32 +135,21 @@ h3:hover {
   animation: loading 2s infinite ease;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px), only screen {
+  .wrapper {
+    width: 60%;
+    margin-top: -20px;
+   
+  }
   #results {
-    background: #fcfcfc;
-    z-index: 0;
-    flex-direction: row;
-    width: 38%;
-    padding: 90px 15px 15px 15px;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-    margin-top: -40px;
-    box-shadow: 4px 2px 6px rgba(0, 0, 0, 0.2);
-
+    flex-direction: column;
   }
   h3 {
-    font-family: 'Aleo', serif;
-    font-weight: 200;
-    color: #313131;
-    padding: 20px 0;
+    border: none;
     border-top: 1px solid rgba(133,133,133,0.3);
-    text-align: center;
-    align-self: center;
   }
-  h3:hover {
-    color: #fff;
-    background-color: #b72aff;
-    transition: all 0.45s ease;
+  #search {
+    width: 70%;
   }
 }
 

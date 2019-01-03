@@ -1,6 +1,7 @@
 let searchBar =  document.getElementById("search");
 let particleContainer = document.getElementById("background");
 let results = document.getElementById("results");
+let wrapper = document.getElementsByClassName("wrapper")[0];
 window.onload = () => {
   
   const PARTICLE_MAX = 500;
@@ -35,10 +36,13 @@ document.addEventListener("keydown", (e) => {
   
   if(e.key == 'Enter'){
     let q = searchBar.value;
+
     while(results.firstElementChild){
       results.removeChild(results.firstElementChild);
     }
-    results.style.display = "flex";
+
+    wrapper.style.display = "flex";
+    results.style.overflowX = "hidden";
     let loader = document.createElement("div");
     loader.className = "loader";
 
@@ -60,6 +64,7 @@ document.addEventListener("keydown", (e) => {
       
       data.then(data => {
         results.removeChild(results.firstElementChild);
+        results.style.overflowX = "scroll";
         let artistId = data.artist.artist_id;
         
         fetch("https://api.musixmatch.com/ws/1.1/artist.related.get?format=jsonp&callback=callback&artist_id="+ artistId +"&page=0&page_size=10&apikey=fc5c43e147239696f2f0acb1733a984c")
@@ -73,13 +78,17 @@ document.addEventListener("keydown", (e) => {
           for(let artist of data){
             let link = document.createElement("h3");
             link.innerText = artist.artist.artist_name;
+            link.onclick = () => {
+              window.open("http://www.google.com/search?q="+ artist.artist.artist_name, '_blank'); 
+            }
             results.appendChild(link);
           }
         })
       }).catch(err => {
         alert("Artist not found!");
         results.removeChild(results.firstElementChild);
-        results.style.display = "none";
+        wrapper.style.display = "none";
+        results.style.overflowX = "hidden";
       })
       
     }
