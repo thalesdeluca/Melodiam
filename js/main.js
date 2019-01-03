@@ -1,6 +1,6 @@
 let searchBar =  document.getElementById("search");
 let particleContainer = document.getElementById("background");
-
+let results = document.getElementById("results");
 window.onload = () => {
   
   const PARTICLE_MAX = 500;
@@ -13,7 +13,8 @@ window.onload = () => {
     particle.style.setProperty('--offset-left', (Math.floor(Math.random() * window.innerWidth*2) - window.innerWidth) + "px");
     particle.style.setProperty('--offset-top', (Math.floor(Math.random() * window.innerHeight*2) - window.innerHeight) + "px");
 
-    let color = "hsl(280, 100%, " + (Math.floor(Math.random() * 100) + 1) + "%)"; //shades of purple
+    //shades of purple
+    let color = "hsl(280, 100%, " + (Math.floor(Math.random() * 100) + 1) + "%)"; 
     let size = Math.floor((Math.random() * 10) + 5) + "px";
 
     particle.style.backgroundColor = color;
@@ -30,26 +31,57 @@ window.onload = () => {
 }
 
 
-
-
-
 document.addEventListener("keydown", (e) => {
+  
   if(e.key == 'Enter'){
     let q = searchBar.value;
+    while(results.firstElementChild){
+      results.removeChild(results.firstElementChild);
+    }
+    results.style.display = "flex";
+    let loader = document.createElement("div");
+    loader.className = "loader";
+
+    results.appendChild(loader);
+
     if(q != ''){
-      fetch("https://api.musixmatch.com/ws/1.1/artist.search?format=jsonp&callback=callback&q_artist="+q+"&page=1&page_size=1&apikey=fc5c43e147239696f2f0acb1733a984c")
+      let data = fetch("https://api.musixmatch.com/ws/1.1/artist.search?format=jsonp&callback=callback&q_artist="+q+"&page=1&page_size=1&apikey=fc5c43e147239696f2f0acb1733a984c")
       .then(response => response.text())
       .then(data => {
         data = data.replace("callback(", "");
         data = data.replace(");", "");
-        return JSON.parse(data);
-        console.log(JSON.parse(data));
+        data = JSON.parse(data);
+        if(data.message.body.artist_list.length > 0)
+          return data.message.body.artist_list[0];
+        else
+          throw "Not Found";
       })
-      .then(data => {
-        console.log(data);
-        let artistId = data.message.body.artist_list[0].artist.artist_id;
-        console.log(artistId);
-      });
+
+      
+      data.then(data => {
+        results.removeChild(results.firstElementChild);
+        let artistId = data.artist.artist_id;
+        
+        fetch("https://api.musixmatch.com/ws/1.1/artist.related.get?format=jsonp&callback=callback&artist_id="+ artistId +"&page=0&page_size=10&apikey=fc5c43e147239696f2f0acb1733a984c")
+        .then(response => response.text())
+        .then(data => {
+          data = data.replace("callback(", "");
+          data = data.replace(");", "");
+          return JSON.parse(data).message.body.artist_list;
+        })
+        .then(data => {
+          for(let artist of data){
+            let link = document.createElement("h3");
+            link.innerText = artist.artist.artist_name;
+            results.appendChild(link);
+          }
+        })
+      }).catch(err => {
+        alert("Artist not found!");
+        results.removeChild(results.firstElementChild);
+        results.style.display = "none";
+      })
+      
     }
   }
 });

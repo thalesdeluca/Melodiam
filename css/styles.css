@@ -48,10 +48,11 @@ h2 {
   border-radius: 40px;
   padding: 2%;
   box-shadow: 4px 2px 6px rgba(0, 0, 0, 0.2);
-  width: 40%;
+  width: 42%;
   font-size: 24px;
   font-family: 'Thasadith', sans-serif;
   align-self: center;
+  z-index: 4;
   transition: all 0.35s ease;
 }
 
@@ -84,6 +85,104 @@ h2 {
   opacity: 0.18;
   animation: move-particles 30s linear infinite;
 }
+
+#results {
+  background: #fcfcfc;
+  z-index: 0;
+  flex-direction: row;
+  align-items: "center";
+  width: 39.8%;
+  padding: 40px 15px 15px 15px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  margin-top: -40px;
+  box-shadow: 4px 2px 6px rgba(0, 0, 0, 0.2);
+  /*height: 0;*/
+  overflow-x: scroll;
+  display: none;
+}
+h3 {
+  font-family: 'Aleo', serif;
+  display: flex;
+  font-weight: 200;
+  color: #313131;
+  padding: 20px;
+  border-right: 1px solid rgba(133,133,133,0.3);
+}
+h3:hover {
+  display: flex;
+  color: #fff;
+  background-color: #b72aff;
+  transition: all 0.45s ease;
+}
+.loader {
+  display: flex;
+  align-self: center;
+  margin: 0 auto;
+  height: 30px;
+  width: 30px;
+  background:#b41dff;
+  border-radius: 50%;
+  perspective: 0px;
+  animation: loading 2s infinite ease;
+}
+
+@media (max-width: 640px) {
+  #results {
+    background: #fcfcfc;
+    z-index: 0;
+    flex-direction: row;
+    width: 38%;
+    padding: 90px 15px 15px 15px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    margin-top: -40px;
+    box-shadow: 4px 2px 6px rgba(0, 0, 0, 0.2);
+
+  }
+  h3 {
+    font-family: 'Aleo', serif;
+    font-weight: 200;
+    color: #313131;
+    padding: 20px 0;
+    border-top: 1px solid rgba(133,133,133,0.3);
+    text-align: center;
+    align-self: center;
+  }
+  h3:hover {
+    color: #fff;
+    background-color: #b72aff;
+    transition: all 0.45s ease;
+  }
+}
+
+@keyframes loading {
+  0% {
+    background:#b41dff;
+    transform: rotate3d(0);
+  }
+  25%{
+    background:#67357F;
+    transform: rotate3d(1, 0, 0, 180deg);
+
+  }
+  50%{
+    background:#CD69FF;
+    transform: rotate3d(0, 0, 1, -180deg);
+    
+  }
+  75% {
+    background:#9017CC;
+    transform: rotate3d(0, 1, 0, 180deg);
+    
+  }
+  100% {
+    background:#B41DFF;
+    transform: rotate3d(0);
+  }
+}
+
+
 
 @keyframes move-particles {
   100% {
