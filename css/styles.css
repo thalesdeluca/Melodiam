@@ -135,7 +135,7 @@ h3:hover {
   animation: loading 2s infinite ease;
 }
 
-@media (max-width: 768px), only screen {
+@media (max-width: 768px), only screen and (max-width: 1024px) {
   .wrapper {
     width: 60%;
     margin-top: -20px;
@@ -146,10 +146,12 @@ h3:hover {
   }
   h3 {
     border: none;
+    font-size: 12px;
     border-top: 1px solid rgba(133,133,133,0.3);
   }
   #search {
     width: 70%;
+    font-size: 18px;
   }
 }
 
